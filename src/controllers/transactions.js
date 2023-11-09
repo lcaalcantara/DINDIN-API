@@ -35,7 +35,6 @@ const listTransactions = async (req, res) => {
     try {
         const categories = await pool.query('select * from categorias');
         const { rows } = await pool.query(`select * from transacoes where usuario_id = $1`, [id]);
-
         const transactions = rows.map((transacao) => {
             return {
                 id: transacao.id,
@@ -45,14 +44,13 @@ const listTransactions = async (req, res) => {
                 data: transacao.data,
                 usuario_id: transacao.usuario_id,
                 categoria_id: transacao.categoria_id,
-                categoria_nome: categorias.rows.filter((categoria) => {
+                categoria_nome: categories.rows.filter((categoria) => {
                     if (categoria.id === transacao.categoria_id) {
                         return categoria.descricao
                     };
                 })[0].descricao
             };
         })
-
         return res.status(200).json(transactions);
     } catch (error) {
         return res.status(500).json({ mensagem: 'Erro interno do servidor' });
