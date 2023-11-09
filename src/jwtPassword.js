@@ -1,0 +1,1 @@
+module.exports = 'senhaSistema@107020'
