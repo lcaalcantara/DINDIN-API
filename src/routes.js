@@ -24,21 +24,21 @@ const authenticateUser = require('./midways/authentication');
 
 const routes = express();
 
-routes.post('/usuario', signup);
+routes.post('/user', signup);
 routes.post('/login', login);
 
 routes.use(authenticateUser);
 
-routes.get('/usuario', detailUser);
-routes.put('/usuario', updateUser);
+routes.get('/user', detailUser);
+routes.put('/user', updateUser);
 
-routes.get('/categoria', listCategories);
+routes.get('/category', listCategories);
 
-routes.get('/transacao/extrato', getStatement);
-routes.post('/transacao/', createTransaction);
-routes.get('/transacao', listTransactions);
-routes.get('/transacao/:idTransacao', detailTransaction);
-routes.put('/transacao/:id', updateTransaction);
-routes.delete('/transacao/:id', deleteTransaction);
+routes.get('/transaction', listTransactions);
+routes.get('/transaction/statement', getStatement);
+routes.post('/transaction/', createTransaction);
+routes.get('/transaction/:transactionId', detailTransaction);
+routes.put('/transaction/:id', updateTransaction);
+routes.delete('/transaction/:id', deleteTransaction);
 
 module.exports = routes;
