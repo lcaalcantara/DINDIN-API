@@ -35,7 +35,7 @@ values
 create table if not exists transacoes (
 	id serial primary key,
   	descricao text,
-  	valor integer,
+  	valor decimal(15,2),
   	data timestamp default now(),
   	categoria_id integer references categorias(id),
   	usuario_id integer references usuarios(id),

@@ -40,7 +40,7 @@ const listTransactions = async (req, res) => {
                 id: transacao.id,
                 tipo: transacao.tipo,
                 descricao: transacao.descricao,
-                valor: transacao.valor,
+                valor: parseFloat(transacao.valor, 2),
                 data: transacao.data,
                 usuario_id: transacao.usuario_id,
                 categoria_id: transacao.categoria_id,
@@ -153,7 +153,7 @@ const getStatement = async (req, res) => {
         const outflowList = await pool.query(`select valor from transacoes where usuario_id = $1 and tipo = 'saida'`, [id]);
 
         let entrada = inflowList.rows.reduce((acc, cur) => {
-            return acc + cur.valor
+            return parseFloat(acc, 2) + parseFloat(cur.valor, 2)
         }, 0);
 
         if (inflowList.rowCount < 1) {
@@ -161,7 +161,7 @@ const getStatement = async (req, res) => {
         }
 
         let saida = outflowList.rows.reduce((acc, cur) => {
-            return acc + cur.valor
+            return parseFloat(acc, 2) + parseFloat(cur.valor, 2)
         }, 0);
 
         if (outflowList.rowCount < 1) {
