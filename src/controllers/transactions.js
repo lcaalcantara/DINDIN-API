@@ -1,9 +1,8 @@
 const pool = require('../conection');
 
 const createTransaction = async (req, res) => {
-    const { tipo, descricao, valor, categoria_id } = req.body;
+    const { tipo, descricao, valor, data, categoria_id } = req.body;
     const { id } = req.usuario;
-    const data = new Date().toJSON();
 
     try {
         const searchCategory = await pool.query(
@@ -11,13 +10,12 @@ const createTransaction = async (req, res) => {
             [categoria_id]
         );
 
-        const categoryName = pesquisarCategoria.rows[0].descricao;
+        const categoryName = searchCategory.rows[0].descricao;
 
         const query =
             `insert into transacoes (tipo, descricao, valor, data, categoria_id, usuario_id)
             values ($1, $2, $3, $4, $5, $6) returning *`
         const params = [tipo, descricao, valor, data, categoria_id, id]
-
 
         const { rows } = await pool.query(query, params);
 
